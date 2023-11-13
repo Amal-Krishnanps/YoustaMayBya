@@ -56,10 +56,10 @@ class Carts(models.Model):
     ClothVarient=models.ForeignKey(ClothVarients,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     options=(
-        ("in-cart"."in-cart"),
+        ("in-cart","in-cart"),
         ("order-placed","order-placed"),
         ("cancelled","cancelled")
-    )
+        )
     status=models.CharField(max_length=200,choices=options,default="in-cart")
     date=models.DateTimeField(auto_now_add=True)
 
@@ -72,7 +72,7 @@ class Orders(models.Model):
         ("dispatched","dispatched"),
         ("in-transit","in-transit"),
         ("delivered","delivered")
-    )
+        )
     status=models.CharField(max_length=200,choices=options,default="order-placed")
     ordered_date=models.DateTimeField(auto_now_add=True)
     expected_date=models.DateField(null=True)
