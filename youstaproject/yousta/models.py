@@ -28,6 +28,7 @@ class Cloths(models.Model):
     material=models.CharField(max_length=200,choices=options,default="cotton")
     image=models.ImageField(upload_to="images")
     brand=models.CharField(max_length=200)
+    category=models.ForeignKey(Category,null=True,on_delete=models.SET_NULL)
     
     def __str__(self):
         return self.name

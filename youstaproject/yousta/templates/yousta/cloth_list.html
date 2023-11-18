@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloths</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+</head>
+<body>
+    
+    <div class="container mt-5">
+        <table class="table table-striped">
+            <tr>
+                <td>Name</td>
+                <td>Material</td>
+                <td>Brand</td>
+                <td>Image</td>
+            </tr>
+            <tr>
+                {%for ct in cloths%}
+                <td>{{ct.name}}</td>
+                <td>{{ct.material}}</td>
+                <td>{{ct.brand}}</td>
+                <td>
+                    <img src="{{ct.image.url}}" alt="" width="100%" height="200px">
+                </td>
+                <td>
+                    <a href="{%url 'cloth-remove' ct.id%}">Delete</a>
+                    <a href="{%url 'add-varient' ct.id%}">Add Varient</a>
+                  </td>
+            </tr>
+            {%endfor%}
+ 
+        </table>
+    </div>
+</body>
+</html>

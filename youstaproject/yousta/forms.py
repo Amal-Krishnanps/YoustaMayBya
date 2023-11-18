@@ -3,7 +3,7 @@ from unicodedata import category
 from django import forms
 
 
-from yousta.models import User,Category
+from yousta.models import User,Category,Cloths,ClothVarients
 from django.contrib.auth.forms import UserCreationForm
 
 class RegistrationForm(UserCreationForm):
@@ -15,7 +15,17 @@ class LoginForm(forms.Form):
     username=forms.CharField()
     password=forms.CharField(widget=forms.PasswordInput)
     
-class CategoryAddForm(forms.ModelForm):
+class CategoryCreateForm(forms.ModelForm):
     class Meta:
-        model=category
+        model=Category
         fields=["name"]
+        
+class ClothAddForm(forms.ModelForm):
+    class Meta:
+        model=Cloths
+        fields="__all__"
+
+class ClothVarientForm(forms.ModelForm):
+    class Meta:
+        model=ClothVarients
+        exclude=("cloth",)  #tuple
