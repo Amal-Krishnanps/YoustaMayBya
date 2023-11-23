@@ -1,9 +1,7 @@
-from dataclasses import fields
-from unicodedata import category
 from django import forms
 
 
-from yousta.models import User,Category,Cloths,ClothVarients
+from yousta.models import User,Category,Cloths,ClothVarients,Offers
 from django.contrib.auth.forms import UserCreationForm
 
 class RegistrationForm(UserCreationForm):
@@ -29,3 +27,13 @@ class ClothVarientForm(forms.ModelForm):
     class Meta:
         model=ClothVarients
         exclude=("cloth",)  #tuple
+        
+class OfferForm(forms.ModelForm):
+    class Meta:
+        model=Offers
+        exclude=("ClothVarient",)
+        widgets={
+            "start_date":forms.DateInput(attrs={"type":"date"}),
+            "due_date":forms.DateInput(attrs={"type":"date"}),            
+        }
+        
