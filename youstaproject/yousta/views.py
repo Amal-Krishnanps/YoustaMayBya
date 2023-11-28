@@ -2,7 +2,7 @@ from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from django.views.generic import CreateView,FormView,ListView,UpdateView,DetailView
+from django.views.generic import CreateView,FormView,ListView,UpdateView,DetailView,TemplateView
 from django.urls import reverse_lazy,reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
@@ -67,7 +67,7 @@ class SignInView(FormView):
             if usr:
                 login(request,usr)
                 messages.success(request,"Login Success")
-                return redirect("signin")
+                return redirect("index")
             else:
                 messages.error(request,"Invalid Credentials")
                 return render(request,self.template_name,{"form":form})    
@@ -105,7 +105,7 @@ class ClothCreateView(CreateView):
     template_name="yousta/cloth_add.html"   
     model=Cloths
     form_class=ClothAddForm
-    success_url=reverse_lazy("cloth-add")
+    success_url=reverse_lazy("cloth-list")
     
     def form_valid(self, form):
         messages.success(self.request,"cloth added")
@@ -223,3 +223,7 @@ def offer_delete_view(request,*args,**kwargs):
 def sign_out_view(request,*args,**kwargs):
     logout(request)
     return redirect("signin")
+
+class IndexView(TemplateView):
+    template_name="yousta/index.html"
+    
