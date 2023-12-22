@@ -30,6 +30,11 @@ class Cloths(models.Model):
     brand=models.CharField(max_length=200)
     category=models.ForeignKey(Category,null=True,on_delete=models.SET_NULL)
     
+    @property
+    def varients(self):
+        qs=self.clothvarients_set.all()
+        return qs
+    
     def __str__(self):
         return self.name
     
@@ -45,6 +50,10 @@ class ClothVarients(models.Model):
     )
     size=models.CharField(max_length=200,choices=options,default="M")
     cloth=models.ForeignKey(Cloths,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cloth.name
+
 
 class Offers(models.Model):
     ClothVarient=models.ForeignKey(ClothVarients,on_delete=models.CASCADE)
@@ -78,11 +87,11 @@ class Orders(models.Model):
     ordered_date=models.DateTimeField(auto_now_add=True)
     expected_date=models.DateField(null=True)
     address=models.CharField(max_length=200)
-
+    
 from django.core.validators import MinValueValidator,MaxValueValidator
 class Reviews(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    ClothVarient=models.ForeignKey(ClothVarients,on_delete=models.CASCADE)
+    cloth=models.ForeignKey(Cloths,null=True,on_delete=models.SET_NULL)
     rating=models.PositiveBigIntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)])
     comment=models.CharField(max_length=300)
     
